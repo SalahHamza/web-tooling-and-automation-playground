@@ -3,6 +3,9 @@ const sass = require('gulp-sass');
 const babel = require('gulp-babel');
 const eslint = require('gulp-eslint');
 const concat = require('gulp-concat');
+const imagemin = require('gulp-imagemin');
+const pngquant = require('imagemin-pngquant');
+const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
 const browserSync = require('browser-sync').create();
 const jasmineBrowser = require('gulp-jasmine-browser');
@@ -80,10 +83,12 @@ exports.lint = lintTask;
 // scripts task for development
 function scriptsTask() {
   return gulp.src(paths.scripts.src)
+    .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
     .pipe(concat('all.js'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.scripts.dest));
 }
 
@@ -92,16 +97,36 @@ exports.scripts = scriptsTask;
 // scripts task for production
 function scriptsProdTask() {
   return gulp.src(paths.scripts.src)
+    .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
     .pipe(concat('all.js'))
     .pipe(uglify())
+    .pipe(sourcemaps().write())
     .pipe(gulp.dest(paths.scripts.dest));
 }
 
 
 exports.scriptsProd = scriptsProdTask;
+
+
+/******************
+    images tasks
+******************/
+function optImgsTask() {
+  return gulp.src(paths.imgs.src)
+    .pipe(imagemin({
+      // Progressive rendering loads an image in
+      // layers where each layer makes the image
+      // more detailed
+      progressive: true,
+      use: [pngquant()]
+    }))
+    .pipe(gulp.dest(paths.imgs.dest));
+}
+
+exports.optimizeImages = optImgsTask;
 
 /******************
     Copy tasks
@@ -174,11 +199,13 @@ function devTask(done) {
   done();
 }
 
+exports.dev = devTask;
+
 /******************
     prod task
 ******************/
 
-exports.dist = gulp.series(copyHtmlTask, copyImgsTask, stylesTask, lintTask, scriptsProdTask);
+exports.dist = gulp.series(copyHtmlTask, optImgsTask, stylesTask, lintTask, scriptsProdTask);
 
 /******************
     default task

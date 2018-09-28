@@ -20,10 +20,13 @@
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^5.0.0",
+    "gulp-imagemin": "^4.1.0",
     "gulp-jasmine-browser": "^4.0.0",
     "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
     "gulp-uglify-es": "^1.0.4",
+    "imagemin-pngquant": "^6.0.0",
     "jasmine-core": "^3.2.1",
     "puppeteer": "^1.8.0"
   },
