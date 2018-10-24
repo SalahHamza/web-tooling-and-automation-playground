@@ -1,0 +1,22 @@
+{
+  "icons": [
+    {
+      "src": "assets/assets/img/icons/icon_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/assets/img/icons/icon_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Restaurant Reviews",
+  "short_name": "RR",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "Restaurant Reviews Progressive Web App",
+  "background_color": "#252831",
+  "theme_color": "#252831"
+}
